@@ -7,8 +7,9 @@ int fps = 0;
 float motorLimit = 1;
 public PIDCtrl ctrl;
 Vehicle car;
+int ON_OFF = 1;
 void setup() {
-    size(300, 400, P2D);
+    size(400, 400, P2D);
     textMode(SCREEN);
     noStroke();
     hs1 = new Scrollbar(10, 190, width - 20, 10, 1);
@@ -24,7 +25,10 @@ void draw() {
     float carPos = hs1.getPos() / 100.0;
     float error = carPos - car.position;
     float dt = 1.0 / (frameRate + 0.000001);
-    float force = ctrl.Update(error, dt);
+    float force = 0; // ctrl.Update(error, dt);
+	if (ON_OFF) {
+		force = ctrl.Update(error, dt);
+	}
     force = max(-motorLimit, min(motorLimit, force));
     car.slope = radians(-hs2.getPos() * .35);
     carPos = car.Update(force, dt) * 100.0;
@@ -98,6 +102,9 @@ void setProcessVars(float p, float i, float d, float mass, float damping, float 
 void resetCar() {
     ctrl.ResetCtrl();
     car.Reset();
+}
+void setOnOff(int val) {
+	ON_OFF = val;
 }
 class PIDCtrl {
     public float Kp, Ki, Kd;

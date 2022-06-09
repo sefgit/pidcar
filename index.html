@@ -9,7 +9,7 @@
 			}
 			#hellocanvas {
 				border:2px solid #DDDDDD;
-				width:300px;
+				width:400px;
 				height:400px;
 			}
 			.inline {
@@ -52,6 +52,15 @@
 		   var pjs = Processing.getInstanceById('hellocanvas');
 		   pjs.resetCar();
 	  }
+	  function ToggleAuto() {
+		   var pjs = Processing.getInstanceById('hellocanvas');
+		   var el = document.getElementById("auto");
+		   if (el.checked) {
+				pjs.setOnOff(1);
+		   } else {
+				pjs.setOnOff(0);
+		   }
+	  }
 	</script>		
 	</head>
 	<body onload="loading()">
@@ -80,6 +89,8 @@
 					</div>
 				</fieldset>
 				<br>
+				<input id="auto" type="checkbox" onclick="ToggleAuto()" checked>AUTO
+				&nbsp;
 				<button type="button" onclick="ResetCar()">Reset car</button>
 			</td>
 		</tr>
